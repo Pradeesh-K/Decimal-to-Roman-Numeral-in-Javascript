@@ -1,0 +1,43 @@
+function roman(num) {
+  switch(num) {
+    case 0: return '';
+    case 1: return 'I';
+    case 4: return 'IV';
+    case 5: return 'V';
+    case 9: return 'IX';
+    case 10: return 'X';
+    case 40: return 'XL';
+    case 50: return 'L';
+    case 90: return 'XC';
+    case 100: return 'C';
+    case 400: return 'CD';
+    case 500: return 'D';
+    case 900: return 'CM';
+    case 1000: return 'M';
+    default: return 'no';
+  }
+}
+
+function convertToRoman(num) {
+  let arr = [];
+  let i = 0;
+  let r;
+  while(10 ** i <= num) {                                 // Extract the unit, tens, hundreds digit of number sequentially
+    r = Math.floor(num % 10 ** (i+1) - num % (10 ** i));
+  if(r == 0) {
+      i++;
+      continue;
+    }
+    if (roman(r) != 'no') {
+      arr.unshift(roman(r));
+    }
+    else {
+      arr.unshift(roman(5*10 ** i * Math.floor(r/(5*10 ** i)))+roman(10 ** i).repeat(r % (5* 10 ** i) / (10 ** i)));    // conversion of number into equivalent roman number
+    }
+    i++;
+  }
+ return arr.join("");                                   // returning the output as a string, after combining elements in the array
+  
+}
+
+Ex: convertToRoman(36);
